@@ -2,10 +2,6 @@
  * Created by emmet on 21/07/2016.
  */
 import org.powerbot.script.rt6.ClientContext;
-import org.powerbot.script.rt6.GameObject;
-import org.powerbot.script.rt6.Item;
-import org.powerbot.script.Random;
-import sun.applet.Main;
 
 import java.util.Map;
 
@@ -14,10 +10,9 @@ public class CheckPrice extends Task<ClientContext> {
     public CheckPrice(ClientContext ctx){
         super(ctx);
     }
-    private double timeout = 1000 * 60 * 60;
     private int buyprice = 20000;
     private int sellprice = 10;
-                        //1 hour
+
     Util myUT = new Util();
     GrandExchange ge = new GrandExchange(ctx);
 
@@ -26,9 +21,7 @@ public class CheckPrice extends Task<ClientContext> {
     @Override
     public boolean activate(){
         /*
-        if the inventory isn't full,
-        if there is a tree near by,
-        is the player is idle
+            If we have reached the timeout - 1 hour  +- 5 minutes since last check.
          */
         double curTime =  System.currentTimeMillis();
         System.out.println("Checking activate at.. "+ curTime);
@@ -40,15 +33,12 @@ public class CheckPrice extends Task<ClientContext> {
         //reuses the tree objects found in activate
 
         if(ge.open()){
-            myUT.delay(1000,600);
+            myUT.Delay(1000,600);
 
             //buy the dhides and the leathers
             BuyItemList(myUT.hides);
-            myUT.delay(5000,1200);
             SellItemList(myUT.hides);
-            myUT.delay(5000,1200);
             BuyItemList(myUT.leathers);
-            myUT.delay(5000,1200);
             SellItemList(myUT.leathers);
 
         }
@@ -64,21 +54,22 @@ public class CheckPrice extends Task<ClientContext> {
             System.out.println("\nbuying "+entry.getKey());
             if(ge.buy(entry.getValue(),1,buyprice)){
                 System.out.println("finished buying");
-                myUT.delay(5000,1000);
+                myUT.Delay(5000,1000);
             }
             else{
                 System.out.println("Initial buy failed, retrying");
                 ge.close();
                 ge.open();
                 ge.buy(entry.getValue(),1,buyprice);
-                myUT.delay(5000,1000);
+                myUT.Delay(2000,1000);
             }
         }
         if(!ge.collectToInventory()){
             System.out.println("collect failed, retrying");
-            myUT.delay(5000,1000);
+            myUT.Delay(5000,1000);
             ge.collectToInventory();
         }
+        myUT.Delay(6000,1200);
     }
 
     //method to sell the hides and leather in the inventory based on the map passed in
@@ -93,5 +84,6 @@ public class CheckPrice extends Task<ClientContext> {
         }
         //collect all of the hides to inventory
         ge.collectToInventory();
+        myUT.Delay(6000,1200);
     }
 }

@@ -30,11 +30,7 @@ public class MainScript extends PollingScript<ClientContext> {
                 task.execute();
             }
         }
-        try{
-            //3 mins +- number up to 120 sec
-            Thread.sleep(180000 + myUT.GenerateDelay(120000));
-        } catch (InterruptedException ex){
-            Thread.currentThread().interrupt();
-        }
+        //3 mins +- number up to 120 sec
+        myUT.Delay(180000,120000);
     }
 }

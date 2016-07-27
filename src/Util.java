@@ -6,25 +6,20 @@ import org.powerbot.script.Random;
  * Created by emmet on 21/07/2016.
  */
 public class Util {
+    /*
+        timeout = 1hour in mili
+        hashmaps containing item information
+        xmlPath for future extensibility in reading items from xml
+            TO-DO: another xml path for writing out price updates to for web portal parsing.
+     */
     public double timeout = 1000 * 60 * 60;
     protected Map<String,Integer> hides = new HashMap<String, Integer>();
     protected Map<String,Integer> leathers = new HashMap<String, Integer>();
     protected Map<String,Integer> notes = new HashMap<String, Integer>();
+
     String xmlPath = "C:\\GeCheckerXML";
-    /* Hides
-        green = 1753
-        blue =1751
-        red =1749
-        black =1747
-        royal =
-     */
-    /* Noted
-        green = 1754
-        blue =1752
-        red =1750
-        black =1748
-        royal =
-     */
+
+
     Util() {
         hides.put("Green Dragonhide", 1753);
         hides.put("Blue Dragonhide", 1751);
@@ -53,7 +48,7 @@ public class Util {
      *
      * @param curTime = the current system time
      * @param lastTime = the last time the system checked prices
-     * @return true if 1 hour +- random delay has elapsed since lastTime
+     * @return true if 1 hour +- random Delay has elapsed since lastTime
      */
     public boolean CheckTimeout(double curTime, double lastTime){
         boolean timedOut = false;
@@ -70,7 +65,7 @@ public class Util {
     //widget 1638 -> component 23 -> item name
     //              -> component 24 -> price
 
-    protected void delay(int basetime, int delaytime){
+    protected void Delay(int basetime, int delaytime){
         try{
             //3 mins +- number up to 120 sec
             Thread.sleep(basetime + GenerateDelay(delaytime));
