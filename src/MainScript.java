@@ -15,6 +15,7 @@ public class MainScript extends PollingScript<ClientContext> {
     private List<Task> taskList = new ArrayList<Task>();
     public static double lastChecked = 0;
     Util myUT = new Util();
+    UserSpecific User = new UserSpecific("name goes here");
 
     @Override
     public void start() {
